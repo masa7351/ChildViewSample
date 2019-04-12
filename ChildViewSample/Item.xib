@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="Item" customModule="ChildViewSample" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="156" height="30"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NfI-te-g0K">
+                    <rect key="frame" x="35" y="5" width="86" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="0fy-sb-SJF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAH-2v-UwC">
+                    <rect key="frame" x="126" y="5" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="4z0-Ra-Gid"/>
+                        <constraint firstAttribute="width" constant="20" id="WRK-i8-ccR"/>
+                    </constraints>
+                    <state key="normal" title="×"/>
+                    <connections>
+                        <action selector="didTapCloseButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="j3M-V7-OBB"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.35750923231914228" green="0.98823529409999999" blue="0.2832749807294842" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="NfI-te-g0K" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="5Dy-Sr-zG3"/>
+                <constraint firstAttribute="bottom" secondItem="NfI-te-g0K" secondAttribute="bottom" constant="5" id="Jco-2q-smj"/>
+                <constraint firstAttribute="trailing" secondItem="oAH-2v-UwC" secondAttribute="trailing" constant="10" id="YMY-8R-51b"/>
+                <constraint firstItem="NfI-te-g0K" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="cD4-bO-rCh"/>
+                <constraint firstAttribute="bottom" secondItem="oAH-2v-UwC" secondAttribute="bottom" constant="5" id="cfA-9r-pwx"/>
+                <constraint firstItem="oAH-2v-UwC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="lQh-3r-HR3"/>
+                <constraint firstItem="oAH-2v-UwC" firstAttribute="leading" secondItem="NfI-te-g0K" secondAttribute="trailing" constant="5" id="qLl-2z-yPD"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="textLabel" destination="NfI-te-g0K" id="zeg-xw-Cx8"/>
+            </connections>
+            <point key="canvasLocation" x="-59.200000000000003" y="-519.04047976011998"/>
+        </view>
+    </objects>
+</document>
