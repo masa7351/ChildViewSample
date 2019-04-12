@@ -14,24 +14,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var childSecondViewContainer: UIView!
     @IBOutlet weak var itemArea: UIView!
     @IBOutlet weak var horizontalCollectionContainer: UIView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let vc = ChildViewController(with: "ああああ")
-        addViewController(vc, parentViewController: self, containerView: childViewContainer)
-
-        let vc2 = ChildSecondViewController(with: "ああああ")
-        addViewController(vc2, parentViewController: self, containerView: childSecondViewContainer)
-        
-        let item = Item.instantiate(text: "ああああああああああああああああああああ", width: .large)
-        itemArea.addSubview(item)
-
-        let vc3 = HorizontalCollectionViewController(with: "ああああああああああああああああああああ")
-        addViewController(vc3, parentViewController: self, containerView: horizontalCollectionContainer)
+         var dataSource: [ItemType] = [.text1, .text2, .text3, .text4, .text5, .text6, .text7]
+        let vc = HorizontalCollectionViewController(with: dataSource)
+        addViewController(vc, parentViewController: self, containerView: horizontalCollectionContainer)
     }
     
     func addViewController(_ viewController: UIViewController, parentViewController: UIViewController, containerView: UIView) {

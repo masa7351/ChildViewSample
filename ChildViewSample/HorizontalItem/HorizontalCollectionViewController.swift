@@ -13,30 +13,37 @@ class HorizontalCollectionViewController: UIViewController {
 
     // MARK: - Property
     
-    private var defaultOuterInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-    }
+    private let outerInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    private let leftAndRightInset: CGFloat = 20
+    private let heightOfCell: CGFloat      = 28
+    private let cellMargin: CGFloat        = 10
     
-    private let sideInset: CGFloat = 20
-
     private lazy var collectionView: UICollectionView = {
         let collectionView =  UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.scrollIndicatorInsets = outerInsets
+        collectionView.register(SmallCell.self, forCellWithReuseIdentifier: "SmallCell")
+        collectionView.register(MiddleCell.self, forCellWithReuseIdentifier: "MiddleCell")
+        collectionView.register(LargeCell.self, forCellWithReuseIdentifier: "LargeCell")
         return collectionView
     }()
 
     private lazy var collectionViewLayout: UICollectionViewLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = defaultOuterInsets
+        layout.sectionInset = outerInsets
+        layout.itemSize = CGSize(width: 200, height: heightOfCell)
         layout.scrollDirection = .horizontal
         return layout
     }()
     
+    private var dataSource: [ItemType]
+    
     // MARK: - Initializer
     
-    init(with input: String) {
+    init(with input: [ItemType]) {
+        self.dataSource = input
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,15 +51,14 @@ class HorizontalCollectionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { (make) -> Void in
             make.top.left.right.bottom.equalTo(view)
         }
-        collectionView.register(SmallCell.self, forCellWithReuseIdentifier: "SmallCell")
-        collectionView.register(LargeCell.self, forCellWithReuseIdentifier: "LargeCell")
-        collectionView.scrollIndicatorInsets = defaultOuterInsets
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,46 +68,55 @@ class HorizontalCollectionViewController: UIViewController {
 
 }
 
+// MARK: - UICollectionViewDataSource
+
 extension HorizontalCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row % 3 == 0 {
-            let cell : SmallCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallCell", for: indexPath) as! SmallCell
-            cell.textLabel?.text = indexPath.row.description
-            return cell
+        let item = dataSource[indexPath.row]
+        let cell: BaseCell
+        if item.width == ItemWidthType.small.rawValue {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallCell", for: indexPath) as! BaseCell
+        } else if item.width == ItemWidthType.middle.rawValue {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MiddleCell", for: indexPath) as! BaseCell
         } else {
-            let cell : LargeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LargeCell", for: indexPath) as! LargeCell
-            cell.textLabel?.text = indexPath.row.description
-            return cell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LargeCell", for: indexPath) as! BaseCell
         }
+        cell.update(at: indexPath.row,
+                    text: item.text,
+                    textColor: item.textColor,
+                    canvasColor: item.canvasColor,
+                    cornerColor: item.cornerColor)
+        cell.delegate = self
+        return cell
     }
-
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension HorizontalCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.row % 3 == 0 {
-            return CGSize(width: 50.0, height: 50.0)
-        }
-        return CGSize(width: 100.0, height: 50.0)
+        return CGSize(width: dataSource[indexPath.row].width.float, height: heightOfCell)
     }
 
     // 外枠のマージン
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return defaultOuterInsets
+        return outerInsets
     }
-    
-//    // 垂直方向マージン
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return margin
-//    }
     
     // 水平方向マージン
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
+        return cellMargin
+    }
+}
+
+extension HorizontalCollectionViewController: CellActionProtocol {
+    func closeAction(at index: Int) {
+        dataSource.remove(at: index)
+        collectionView.reloadData()
     }
 }
