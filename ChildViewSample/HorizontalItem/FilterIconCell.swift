@@ -8,18 +8,51 @@
 
 import UIKit
 
-protocol CellActionProtocol: class {
+protocol FilterIconActionProtocol: class {
     func closeAction(at index: Int)
 }
 
-class BaseCell: UICollectionViewCell {
+protocol FilterIconProtocol {
+    var width: Int {get}
+    var text: String {get}
+    var canvasColor: UIColor {get}
+    var textColor: UIColor {get}
+    var cornerColor: UIColor {get}
+}
+
+enum FilterIconWidthType: Int {
+    case small  = 128
+    case middle = 141
+    case large  = 160
+}
+
+internal final class FilterIconSmallCell: FilterIconCell {
+    override var contentWidth: CGFloat {
+        return FilterIconWidthType.small.rawValue.float
+    }
+}
+
+internal final class FilterIconMiddleCell: FilterIconCell {
+    override var contentWidth: CGFloat {
+        return FilterIconWidthType.middle.rawValue.float
+    }
+}
+
+internal final class FilterIconLargeCell: FilterIconCell {
+    override var contentWidth: CGFloat {
+        return FilterIconWidthType.large.rawValue.float
+    }
+}
+
+/// フィルターIcon用のベースクラス
+internal class FilterIconCell: UICollectionViewCell {
     var index: Int?
     var textLabel: UILabel!
     var closeButton: UIButton!
     var outerBorderLayer: CALayer!
-    weak var delegate: CellActionProtocol?
+    weak var delegate: FilterIconActionProtocol?
     var contentWidth: CGFloat {
-        return ItemWidthType.small.rawValue.float
+        return FilterIconWidthType.small.rawValue.float
     }
 
     // MARK: - Initializer
@@ -34,7 +67,7 @@ class BaseCell: UICollectionViewCell {
         self.contentView.backgroundColor = UIColor.white
 
         // text
-        textLabel = UILabel(frame: CGRect(x:0, y:0, width:frame.width-40.float, height:28))
+        textLabel = UILabel(frame: CGRect.zero)
         textLabel.text = ""
         textLabel.font = UIFont.systemFont(ofSize: 14)
         textLabel.textAlignment = NSTextAlignment.center
@@ -45,7 +78,7 @@ class BaseCell: UICollectionViewCell {
         }
         
         // close button
-        closeButton = UIButton(frame: CGRect(x:0, y:0, width:28, height:28))
+        closeButton = UIButton(frame: CGRect.zero)
         closeButton.setTitle("×", for: .normal)
         self.contentView.addSubview(closeButton!)
         closeButton!.snp.makeConstraints { make in
@@ -79,24 +112,6 @@ class BaseCell: UICollectionViewCell {
         contentView.backgroundColor = canvasColor
     }
 
-}
-
-class SmallCell: BaseCell {
-    override var contentWidth: CGFloat {
-        return ItemWidthType.small.rawValue.float
-    }
-}
-
-class MiddleCell: BaseCell {
-    override var contentWidth: CGFloat {
-        return ItemWidthType.middle.rawValue.float
-    }
-}
-
-class LargeCell: BaseCell {
-    override var contentWidth: CGFloat {
-        return ItemWidthType.large.rawValue.float
-    }
 }
 
 extension Int {

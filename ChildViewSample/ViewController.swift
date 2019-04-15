@@ -21,8 +21,9 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-         var dataSource: [ItemType] = [.text1, .text2, .text3, .text4, .text5, .text6, .text7]
-        let vc = HorizontalCollectionViewController(with: dataSource)
+         let dataSource: [ItemType] = [.text1, .text2, .text3, .text4, .text5, .text6, .text7]
+        let vc = FilterIconListViewController(with: dataSource)
+        vc.delegate = self
         addViewController(vc, parentViewController: self, containerView: horizontalCollectionContainer)
     }
     
@@ -42,5 +43,14 @@ class ViewController: UIViewController {
         viewController.didMove(toParent: parentViewController)
     }
     
+}
+
+// MARK: - FilterIconListViewControllerDelegate
+
+extension ViewController: FilterIconListViewControllerDelegate {
+    func refreshDataSource(dataSource: [FilterIconProtocol]) {
+        print("フィルター更新")
+    }
+
 }
 

@@ -16,16 +16,9 @@ enum ItemType {
     case text5
     case text6
     case text7
-
 }
 
-enum ItemWidthType: Int {
-    case small  = 128
-    case middle = 141
-    case large  = 160
-}
-
-extension ItemType {
+extension ItemType: FilterIconProtocol {
 
     private struct ItemValues {
         var width: Int
@@ -38,43 +31,43 @@ extension ItemType {
     private var itemValues: ItemValues {
         switch self {
         case .text1:
-            return ItemValues(width: ItemWidthType.small.rawValue,
+            return ItemValues(width: FilterIconWidthType.small.rawValue,
                               text: "テキスト1",
                               textColor: UIColor.black,
                               canvasColor: UIColor.white,
                               cornerColor: UIColor.white)
         case .text2:
-            return ItemValues(width: ItemWidthType.middle.rawValue,
+            return ItemValues(width: FilterIconWidthType.middle.rawValue,
                               text: "テキスト2aaaaa",
                               textColor: UIColor.black,
                               canvasColor: UIColor.white,
                               cornerColor: UIColor.purple)
         case .text3:
-            return ItemValues(width: ItemWidthType.large.rawValue,
+            return ItemValues(width: FilterIconWidthType.large.rawValue,
                               text: "テキスト3bbbbb",
                               textColor: UIColor.black,
                               canvasColor: UIColor.green,
                               cornerColor: UIColor.green)
         case .text4:
-            return ItemValues(width: ItemWidthType.large.rawValue,
+            return ItemValues(width: FilterIconWidthType.large.rawValue,
                               text: "テキスト4bbbbb",
                               textColor: UIColor.white,
                               canvasColor: UIColor.red,
                               cornerColor: UIColor.red)
         case .text5:
-            return ItemValues(width: ItemWidthType.large.rawValue,
+            return ItemValues(width: FilterIconWidthType.large.rawValue,
                               text: "テキスト5bbbbb",
                               textColor: UIColor.black,
                               canvasColor: UIColor.green,
                               cornerColor: UIColor.green)
         case .text6:
-            return ItemValues(width: ItemWidthType.large.rawValue,
+            return ItemValues(width: FilterIconWidthType.large.rawValue,
                               text: "テキスト6bbbbb",
                               textColor: UIColor.white,
                               canvasColor: UIColor.green,
                               cornerColor: UIColor.green)
         case .text7:
-            return ItemValues(width: ItemWidthType.large.rawValue,
+            return ItemValues(width: FilterIconWidthType.large.rawValue,
                               text: "テキスト7bbbbb",
                               textColor: UIColor.white,
                               canvasColor: UIColor.green,

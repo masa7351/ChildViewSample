@@ -1,5 +1,5 @@
 //
-//  HorizontalCollectionViewController.swift
+//  FilterIconListViewController.swift
 //  ChildViewSample
 //
 //  Created by Imai Masanao on 2019/04/11.
@@ -9,7 +9,11 @@
 import UIKit
 import SnapKit
 
-class HorizontalCollectionViewController: UIViewController {
+protocol FilterIconListViewControllerDelegate: class {
+    func refreshDataSource(dataSource: [FilterIconProtocol])
+}
+
+class FilterIconListViewController: UIViewController {
 
     // MARK: - Property
     
@@ -24,9 +28,9 @@ class HorizontalCollectionViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.scrollIndicatorInsets = outerInsets
-        collectionView.register(SmallCell.self, forCellWithReuseIdentifier: "SmallCell")
-        collectionView.register(MiddleCell.self, forCellWithReuseIdentifier: "MiddleCell")
-        collectionView.register(LargeCell.self, forCellWithReuseIdentifier: "LargeCell")
+        collectionView.register(FilterIconSmallCell.self, forCellWithReuseIdentifier: "FilterIconSmallCell")
+        collectionView.register(FilterIconMiddleCell.self, forCellWithReuseIdentifier: "FilterIconMiddleCell")
+        collectionView.register(FilterIconLargeCell.self, forCellWithReuseIdentifier: "FilterIconLargeCell")
         return collectionView
     }()
 
@@ -38,11 +42,13 @@ class HorizontalCollectionViewController: UIViewController {
         return layout
     }()
     
-    private var dataSource: [ItemType]
+    weak var delegate: FilterIconListViewControllerDelegate?
+    
+    private var dataSource: [FilterIconProtocol]
     
     // MARK: - Initializer
     
-    init(with input: [ItemType]) {
+    init(with input: [FilterIconProtocol]) {
         self.dataSource = input
         super.init(nibName: nil, bundle: nil)
     }
@@ -70,20 +76,20 @@ class HorizontalCollectionViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension HorizontalCollectionViewController: UICollectionViewDataSource {
+extension FilterIconListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = dataSource[indexPath.row]
-        let cell: BaseCell
-        if item.width == ItemWidthType.small.rawValue {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallCell", for: indexPath) as! BaseCell
-        } else if item.width == ItemWidthType.middle.rawValue {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MiddleCell", for: indexPath) as! BaseCell
+        let cell: FilterIconCell
+        if item.width == FilterIconWidthType.small.rawValue {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterIconSmallCell", for: indexPath) as! FilterIconCell
+        } else if item.width == FilterIconWidthType.middle.rawValue {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterIconMiddleCell", for: indexPath) as! FilterIconCell
         } else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LargeCell", for: indexPath) as! BaseCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterIconLargeCell", for: indexPath) as! FilterIconCell
         }
         cell.update(at: indexPath.row,
                     text: item.text,
@@ -97,7 +103,7 @@ extension HorizontalCollectionViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension HorizontalCollectionViewController: UICollectionViewDelegateFlowLayout {
+extension FilterIconListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: dataSource[indexPath.row].width.float, height: heightOfCell)
@@ -114,9 +120,12 @@ extension HorizontalCollectionViewController: UICollectionViewDelegateFlowLayout
     }
 }
 
-extension HorizontalCollectionViewController: CellActionProtocol {
+// MARK: - FilterIconActionProtocol
+
+extension FilterIconListViewController: FilterIconActionProtocol {
     func closeAction(at index: Int) {
         dataSource.remove(at: index)
+        delegate?.refreshDataSource(dataSource: dataSource)
         collectionView.reloadData()
     }
 }

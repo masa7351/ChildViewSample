@@ -13,9 +13,9 @@
 		FCB27BB9225EF429009B80CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCB27BB8225EF429009B80CB /* Assets.xcassets */; };
 		FCB27BBC225EF429009B80CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCB27BBA225EF429009B80CB /* LaunchScreen.storyboard */; };
 		FCB27BCE225F05EC009B80CB /* ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB27BCD225F05EC009B80CB /* ItemType.swift */; };
-		FCB27BD1225F1F3B009B80CB /* HorizontalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB27BCF225F1F3B009B80CB /* HorizontalCollectionViewController.swift */; };
 		FCB27BD82260291A009B80CB /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCB27BD72260291A009B80CB /* SnapKit.framework */; };
-		FCB27BDD22605981009B80CB /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB27BDC22605981009B80CB /* CustomCell.swift */; };
+		FCB27BDD22605981009B80CB /* FilterIconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB27BDC22605981009B80CB /* FilterIconCell.swift */; };
+		FCB27BE42264348E009B80CB /* FilterIconListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB27BE32264348E009B80CB /* FilterIconListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,9 +27,9 @@
 		FCB27BBB225EF429009B80CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FCB27BBD225EF429009B80CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCB27BCD225F05EC009B80CB /* ItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemType.swift; sourceTree = "<group>"; };
-		FCB27BCF225F1F3B009B80CB /* HorizontalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionViewController.swift; sourceTree = "<group>"; };
 		FCB27BD72260291A009B80CB /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
-		FCB27BDC22605981009B80CB /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		FCB27BDC22605981009B80CB /* FilterIconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterIconCell.swift; sourceTree = "<group>"; };
+		FCB27BE32264348E009B80CB /* FilterIconListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterIconListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +86,9 @@
 		FCB27BDE226071BB009B80CB /* HorizontalItem */ = {
 			isa = PBXGroup;
 			children = (
-				FCB27BCF225F1F3B009B80CB /* HorizontalCollectionViewController.swift */,
 				FCB27BCD225F05EC009B80CB /* ItemType.swift */,
-				FCB27BDC22605981009B80CB /* CustomCell.swift */,
+				FCB27BE32264348E009B80CB /* FilterIconListViewController.swift */,
+				FCB27BDC22605981009B80CB /* FilterIconCell.swift */,
 			);
 			path = HorizontalItem;
 			sourceTree = "<group>";
@@ -187,10 +187,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCB27BE42264348E009B80CB /* FilterIconListViewController.swift in Sources */,
 				FCB27BCE225F05EC009B80CB /* ItemType.swift in Sources */,
 				FCB27BB4225EF425009B80CB /* ViewController.swift in Sources */,
-				FCB27BDD22605981009B80CB /* CustomCell.swift in Sources */,
-				FCB27BD1225F1F3B009B80CB /* HorizontalCollectionViewController.swift in Sources */,
+				FCB27BDD22605981009B80CB /* FilterIconCell.swift in Sources */,
 				FCB27BB2225EF425009B80CB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
